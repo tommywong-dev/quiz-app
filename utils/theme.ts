@@ -8,4 +8,9 @@ const colors: ChakraTheme["colors"] = {
   },
 };
 
-export const theme = extendTheme({ colors });
+const fonts: ChakraTheme["fonts"] = {
+  heading: "'Montserrat', 'Trebuchet MS', sans-serif",
+  body: "'Montserrat', 'Trebuchet MS', sans-serif",
+};
+
+export const theme = extendTheme({ colors, fonts });
