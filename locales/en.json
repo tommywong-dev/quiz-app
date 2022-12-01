@@ -1,0 +1,14 @@
+{
+  "appTitle": "Geography Quiz",
+  "form": {
+    "name": {
+      "title": "Name",
+      "required": "Name is required"
+    },
+    "email": {
+      "title": "Email",
+      "required": "Email is required"
+    },
+    "enter": "Enter"
+  }
+}
