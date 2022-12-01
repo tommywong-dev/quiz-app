@@ -3,11 +3,16 @@
   "form": {
     "name": {
       "title": "Name",
-      "required": "Name is required"
+      "required": "Name is required",
+      "tooShort": "Name is too short",
+      "tooLong": "Name is too long"
     },
     "email": {
       "title": "Email",
-      "required": "Email is required"
+      "required": "Email is required",
+      "tooShort": "Email is too short",
+      "tooLong": "Email is too long",
+      "invalid": "Email is invalid"
     },
     "enter": "Enter"
   }

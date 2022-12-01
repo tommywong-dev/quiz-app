@@ -1,25 +1,25 @@
-import {
-  Button,
-  Center,
-  Container,
-  Heading,
-  Input,
-  Stack,
-} from "@chakra-ui/react";
+import { Center, Container, Heading, Stack } from "@chakra-ui/react";
 import React from "react";
+import LoginForm from "../components/pages/home/LoginForm";
 import { useTranslations } from "../hooks";
+import { ILogin } from "../interfaces";
+import { setCookie } from "cookies-next";
+import { trimObjStrings } from "../utils/trimObjStrings";
 
 export default function Home() {
   const t = useTranslations();
+
+  const onSubmit = (values: ILogin) => {
+    const trimmedValues = trimObjStrings(values);
+    setCookie("login", trimmedValues);
+  };
 
   return (
     <Container centerContent>
       <Center minH="100vh" maxW="sm">
         <Stack>
           <Heading>{t.appTitle}</Heading>
-          <Input placeholder={t.form.name.title} required />
-          <Input placeholder={t.form.email.title} required />
-          <Button colorScheme="brand">{t.form.enter}</Button>
+          <LoginForm onSubmit={onSubmit} />
         </Stack>
       </Center>
     </Container>
