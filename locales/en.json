@@ -14,6 +14,7 @@
       "tooLong": "Email is too long",
       "invalid": "Email is invalid"
     },
-    "enter": "Enter"
+    "enter": "Enter",
+    "cookieText": "This website uses cookies, which is necessary for its functioning and required to achieve the purposes illustrated in the cookies policy. Upon entering the quiz you agree to accept the use of cookies."
   }
 }

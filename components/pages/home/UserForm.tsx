@@ -4,6 +4,7 @@ import {
   FormErrorMessage,
   Input,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import React, { useMemo } from "react";
@@ -49,7 +50,7 @@ const UserForm = (props: Props) => {
       validationSchema={validationSchema}
     >
       {({ errors, touched }) => (
-        <Form>
+        <Form noValidate>
           <Stack>
             <Field name="name">
               {({ field }: any) => (
