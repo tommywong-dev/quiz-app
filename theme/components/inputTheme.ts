@@ -6,6 +6,7 @@ const { definePartsStyle, defineMultiStyleConfig } =
 
 const outline = definePartsStyle({
   field: {
+    letterSpacing: "wide",
     borderRadius: 0,
     _focusVisible: {
       borderColor: "brand.300",
