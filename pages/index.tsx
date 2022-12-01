@@ -1,4 +1,4 @@
-import { Center, Container, Stack, Text } from "@chakra-ui/react";
+import { Center, Container, Stack } from "@chakra-ui/react";
 import React from "react";
 import UserForm from "../components/pages/home/UserForm";
 import { useTranslations } from "../hooks";
@@ -7,6 +7,7 @@ import { setCookie } from "cookies-next";
 import { trimObjStrings } from "../utils";
 import { COOKIE_KEY } from "../constants";
 import AppTitle from "../components/common/AppTitle";
+import AppText from "../components/common/AppText";
 
 export default function Home() {
   const t = useTranslations();
@@ -22,7 +23,7 @@ export default function Home() {
         <Stack spacing="8">
           <AppTitle />
           <UserForm onSubmit={onSubmit} />
-          <Text fontSize="xs">{t.form.cookieText}</Text>
+          <AppText fontSize="xs">{t.form.cookieText}</AppText>
         </Stack>
       </Center>
     </Container>
