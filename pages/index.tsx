@@ -1,17 +1,17 @@
 import { Center, Container, Heading, Stack } from "@chakra-ui/react";
 import React from "react";
-import LoginForm from "../components/pages/home/LoginForm";
+import UserForm from "../components/pages/home/UserForm";
 import { useTranslations } from "../hooks";
-import { ILogin } from "../interfaces";
+import { IUser } from "../interfaces";
 import { setCookie } from "cookies-next";
 import { trimObjStrings } from "../utils/trimObjStrings";
 
 export default function Home() {
   const t = useTranslations();
 
-  const onSubmit = (values: ILogin) => {
+  const onSubmit = (values: IUser) => {
     const trimmedValues = trimObjStrings(values);
-    setCookie("login", trimmedValues);
+    setCookie("User", trimmedValues);
   };
 
   return (
@@ -19,7 +19,7 @@ export default function Home() {
       <Center minH="100vh" maxW="sm">
         <Stack>
           <Heading>{t.appTitle}</Heading>
-          <LoginForm onSubmit={onSubmit} />
+          <UserForm onSubmit={onSubmit} />
         </Stack>
       </Center>
     </Container>

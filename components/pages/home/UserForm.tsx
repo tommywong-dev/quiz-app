@@ -8,19 +8,19 @@ import {
 import { Field, Form, Formik } from "formik";
 import React, { useMemo } from "react";
 import { useTranslations } from "../../../hooks";
-import { ILogin } from "../../../interfaces";
+import { IUser } from "../../../interfaces";
 import * as yup from "yup";
 
 interface Props {
-  onSubmit: (values: ILogin) => void;
+  onSubmit: (values: IUser) => void;
 }
 
-const initialValues: ILogin = {
+const initialValues: IUser = {
   name: "",
   email: "",
 };
 
-const LoginForm = (props: Props) => {
+const UserForm = (props: Props) => {
   const { onSubmit } = props;
   const t = useTranslations();
 
@@ -83,4 +83,4 @@ const LoginForm = (props: Props) => {
   );
 };
 
-export default LoginForm;
+export default UserForm;
