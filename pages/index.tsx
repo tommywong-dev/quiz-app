@@ -11,7 +11,7 @@ export default function Home() {
 
   const onSubmit = (values: IUser) => {
     const trimmedValues = trimObjStrings(values);
-    setCookie("User", trimmedValues);
+    setCookie("user", trimmedValues);
   };
 
   return (
