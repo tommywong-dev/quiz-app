@@ -8,7 +8,7 @@ interface Props {
 const AppContainer = (props: Props) => {
   return (
     <Container centerContent>
-      <Center minH="100vh" maxW="md">
+      <Center minH="100vh" w="md">
         {props.children}
       </Center>
     </Container>
