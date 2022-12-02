@@ -19,8 +19,8 @@ const Quiz: NextPage<{ user: IUser }> = (props) => {
     removeCookies(COOKIE_KEY.USER);
   };
 
-  const handleStart = () => {
-    router.push("/quiz/1");
+  const handleStart = async () => {
+    router.push("/quiz/0");
   };
 
   return (

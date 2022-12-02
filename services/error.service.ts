@@ -1,0 +1,10 @@
+import { NextApiResponse } from "next";
+import { makeResponse } from "../utils/makeResponse";
+
+export const throwBadRequest = (res: NextApiResponse) => {
+  res.status(400).json(makeResponse(400, "bad request"));
+};
+
+export const throwInvalidMethod = (res: NextApiResponse) => {
+  res.status(403).json(makeResponse(403, "invalid request method"));
+};
