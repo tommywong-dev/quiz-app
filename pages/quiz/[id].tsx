@@ -9,6 +9,7 @@ import QuizQuestion from "../../components/pages/quiz/QuizQuestion";
 import QuizAnswers from "../../components/pages/quiz/QuizAnswers";
 import QuizActionButtons from "../../components/pages/quiz/QuizActionButtons";
 import { getCookie, setCookie } from "cookies-next";
+import { useAnswer } from "../../hooks";
 
 interface Props {
   quizData: IClientQuiz;
@@ -18,23 +19,7 @@ const Question: NextPage<Props> = (props: Props) => {
   const { quizData } = props;
   const { quiz, totalQuiz } = quizData;
   const router = useRouter();
-
-  // answer handlers
-  const [selected, setSelected] = useState("");
-
-  useEffect(() => {
-    const cookie = getCookie(`Q${quiz.question.id}`);
-    if (!cookie) return;
-    setSelected(cookie.toString());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.asPath]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setSelected((selected) =>
-      selected === e.target.value ? "" : e.target.value
-    );
-  };
+  const { selectedAnswer, handleChangeAnswer } = useAnswer(quiz.question.id);
 
   const handleBack = () => {
     if (quiz.question.id === 0) return;
@@ -44,7 +29,7 @@ const Question: NextPage<Props> = (props: Props) => {
   const handleNext = () => {
     if (quiz.question.id >= totalQuiz - 1) return;
     router.push(`/quiz/${quiz.question.id + 1}`);
-    setCookie(`Q${quiz.question.id}`, selected);
+    setCookie(`Q${quiz.question.id}`, selectedAnswer);
   };
 
   const calculateProgress = useMemo(
@@ -62,15 +47,15 @@ const Question: NextPage<Props> = (props: Props) => {
           <Divider />
           <QuizAnswers
             quiz={quiz}
-            handleChange={handleChange}
-            selected={selected}
+            handleChange={handleChangeAnswer}
+            selectedAnswer={selectedAnswer}
           />
           <Divider />
           <QuizActionButtons
             isNotFirst={quiz.question.id !== 0}
             handleBack={handleBack}
             handleNext={handleNext}
-            disabled={!Boolean(selected)}
+            disabled={!Boolean(selectedAnswer)}
           />
         </QuizBox>
       </Stack>

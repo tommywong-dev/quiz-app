@@ -1,24 +1,30 @@
 import { Radio, RadioGroup, Stack } from "@chakra-ui/react";
 import React, { ChangeEvent } from "react";
+import { usePageLoading } from "../../../hooks";
 import { IClientQuiz } from "../../../interfaces";
 
 interface Props {
   quiz: IClientQuiz["quiz"];
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  selected: string;
+  selectedAnswer: string;
 }
 const QuizAnswers = (props: Props) => {
-  const { quiz, handleChange, selected } = props;
+  const { quiz, handleChange, selectedAnswer } = props;
+  const loading = usePageLoading();
 
   return (
-    <RadioGroup name={`Q${quiz.question.id}`} value={selected}>
+    <RadioGroup
+      name={`Q${quiz.question.id}`}
+      value={selectedAnswer}
+      isDisabled={loading}
+    >
       <Stack>
         {quiz.answers.map((answer) => (
           <Radio
             value={answer.value}
             key={answer.value}
             onChange={handleChange}
-            checked={selected === answer.value}
+            checked={selectedAnswer === answer.value}
           >
             {answer.label}
           </Radio>
