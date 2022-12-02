@@ -14,7 +14,7 @@ const EnterGameBox = (props: Props) => {
   const t = useTranslations();
 
   return (
-    <QuizBox stackSpacing="4">
+    <QuizBox spacing="4">
       <AppText color="blackAlpha.800">{t.quiz.welcome.message}</AppText>
       <SimpleGrid columns={2} spacing="4">
         <QuizButton variant="outline" onClick={handleExit}>

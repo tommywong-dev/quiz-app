@@ -2,10 +2,10 @@ import { Box, BoxProps, Stack, StackProps } from "@chakra-ui/react";
 import React from "react";
 
 interface Props extends BoxProps {
-  stackSpacing?: StackProps["spacing"];
+  spacing?: StackProps["spacing"];
 }
 const QuizBox = (props: Props) => {
-  const { children, stackSpacing } = props;
+  const { children, spacing } = props;
   return (
     <Box
       sx={{
@@ -15,7 +15,7 @@ const QuizBox = (props: Props) => {
       }}
       {...props}
     >
-      <Stack spacing={stackSpacing}>{children}</Stack>
+      <Stack spacing={spacing}>{children}</Stack>
     </Box>
   );
 };
