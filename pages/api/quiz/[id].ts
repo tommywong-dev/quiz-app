@@ -7,8 +7,8 @@ export default async function handler(
 ) {
   switch (req.method?.toUpperCase()) {
     case "GET":
-      getQuiz(req.query.id, res);
+      return getQuiz(req.query.id, res);
     default:
-      throwInvalidMethod(res);
+      return throwInvalidMethod(res);
   }
 }
