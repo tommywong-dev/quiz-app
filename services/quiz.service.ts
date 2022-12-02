@@ -12,6 +12,7 @@ export const getQuiz = (
   }
 
   const id = parseInt(Array.isArray(reqId) ? reqId[0] : reqId, 10);
+  const quizLength = mockQuizzes.length;
   if (id >= mockQuizzes.length) {
     return throwBadRequest(res);
   }
@@ -19,6 +20,5 @@ export const getQuiz = (
   const quiz = { ...mockQuizzes[id] };
   delete quiz.correctAnswer;
 
-  const isLastQuiz = id === mockQuizzes.length - 1;
-  res.status(200).json(makeResponse(200, "", { quiz, isLastQuiz }));
+  res.status(200).json(makeResponse(200, "", { quizLength, quiz }));
 };
