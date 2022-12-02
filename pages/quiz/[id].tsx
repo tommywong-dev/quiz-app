@@ -7,16 +7,13 @@ import {
   RadioGroup,
   Stack,
 } from "@chakra-ui/react";
-import { getCookie } from "cookies-next";
 import { GetServerSideProps } from "next";
 import React from "react";
 import AppContainer from "../../components/common/AppContainer";
 import AppText from "../../components/common/AppText";
 import QuizButton from "../../components/common/QuizButton";
 import QuizBox from "../../components/pages/quiz/QuizBox";
-import { COOKIE_KEY } from "../../constants";
-import { IUser } from "../../interfaces";
-import { redirectHome } from "../../utils/redirectHome";
+import { getUserFromCookie } from "../../utils";
 
 const Question = () => {
   return (
@@ -51,19 +48,12 @@ const Question = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const cookieUser = getCookie(COOKIE_KEY.USER, ctx);
-  if (!cookieUser) {
-    return redirectHome();
-  }
-
-  const user: IUser = JSON.parse(cookieUser.toString());
-
-  if (!user.name || !user.email) {
-    return redirectHome();
-  }
+  const user = getUserFromCookie(ctx);
 
   return {
-    props: {},
+    props: {
+      user,
+    },
   };
 };
 

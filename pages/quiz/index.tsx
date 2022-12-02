@@ -1,5 +1,5 @@
 import { Stack } from "@chakra-ui/react";
-import { getCookie, removeCookies } from "cookies-next";
+import { removeCookies } from "cookies-next";
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import React from "react";
@@ -8,7 +8,7 @@ import EnterGameBox from "../../components/pages/quiz/EnterGameBox";
 import WelcomeText from "../../components/pages/quiz/WelcomeText";
 import { COOKIE_KEY } from "../../constants";
 import { IUser } from "../../interfaces";
-import { redirectHome } from "../../utils/redirectHome";
+import { getUserFromCookie } from "../../utils";
 
 const Quiz: NextPage<{ user: IUser }> = (props) => {
   const { user } = props;
@@ -34,16 +34,7 @@ const Quiz: NextPage<{ user: IUser }> = (props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const cookieUser = getCookie(COOKIE_KEY.USER, ctx);
-  if (!cookieUser) {
-    return redirectHome();
-  }
-
-  const user: IUser = JSON.parse(cookieUser.toString());
-
-  if (!user.name || !user.email) {
-    return redirectHome();
-  }
+  const user = getUserFromCookie(ctx);
 
   return {
     props: {

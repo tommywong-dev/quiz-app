@@ -1,6 +1,6 @@
 import { NextApiResponse } from "next";
 import { mockQuizzes } from "../mocks";
-import { makeResponse } from "../utils/makeResponse";
+import { makeResponse } from "../utils";
 import { throwBadRequest } from "./error.service";
 
 export const getQuiz = (
