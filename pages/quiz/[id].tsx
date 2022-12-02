@@ -10,6 +10,8 @@ import QuizAnswers from "../../components/pages/quiz/QuizAnswers";
 import QuizActionButtons from "../../components/pages/quiz/QuizActionButtons";
 import { setCookie } from "cookies-next";
 import { useAnswer } from "../../hooks";
+import { COOKIE_KEY } from "../../constants";
+import { getAnswersFromCookies } from "../../utils";
 
 interface Props {
   quizData: IClientQuiz;
@@ -30,7 +32,9 @@ const Question: NextPage<Props> = (props: Props) => {
   };
 
   const handleNext = () => {
-    setCookie(`Q${quiz.question.id}`, selectedAnswer);
+    const newAnswers = [...getAnswersFromCookies()];
+    newAnswers[quiz.question.id] = selectedAnswer;
+    setCookie(COOKIE_KEY.ANSWERS, newAnswers);
     handleClearAnswer();
 
     if (quiz.question.id >= totalQuiz - 1) {

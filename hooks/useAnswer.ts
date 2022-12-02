@@ -1,15 +1,17 @@
-import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
+import { getAnswersFromCookies } from "../utils";
 
 export const useAnswer = (questionId: number) => {
   const router = useRouter();
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
   useEffect(() => {
-    const cookie = getCookie(`Q${questionId}`);
-    if (!cookie) return;
-    setSelectedAnswer(cookie.toString());
+    const answers = getAnswersFromCookies();
+    const answer = answers[questionId];
+
+    if (!answer) return;
+    setSelectedAnswer(answer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath]);
 
