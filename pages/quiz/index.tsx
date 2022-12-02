@@ -24,7 +24,7 @@ const Quiz: NextPage<{ user: IUser }> = (props) => {
   };
 
   return (
-    <AppContainer>
+    <AppContainer isQuizPage>
       <Stack spacing="8" alignItems="center">
         <WelcomeText name={user.name} />
         <EnterGameBox handleExit={handleExit} handleStart={handleStart} />

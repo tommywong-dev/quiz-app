@@ -9,7 +9,7 @@
     },
     "mode": {
       "dark": "Dark Mode",
-      "ligh": "Light Mode"
+      "light": "Light Mode"
     }
   },
   "form": {

@@ -50,7 +50,7 @@ const Question: NextPage<Props> = (props: Props) => {
   );
 
   return (
-    <AppContainer>
+    <AppContainer isQuizPage>
       <Stack width="full">
         <Progress value={calculateProgress} colorScheme="brand" />
         <QuizBox spacing="4">

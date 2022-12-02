@@ -5,7 +5,7 @@ import AppContainer from "../../components/common/AppContainer";
 import QuizBox from "../../components/pages/quiz/QuizBox";
 import QuizButton from "../../components/pages/quiz/QuizButton";
 import { useTranslations } from "../../hooks";
-import { useWindowSize } from "../../hooks/useWindowSize";
+import { useWindowSize } from "../../hooks";
 import Confetti from "react-confetti";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/router";
@@ -31,7 +31,7 @@ const QuizResult = (props: Props) => {
   };
 
   return (
-    <AppContainer>
+    <AppContainer isQuizPage>
       <Confetti
         width={width}
         height={height}
