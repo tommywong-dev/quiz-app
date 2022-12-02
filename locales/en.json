@@ -23,6 +23,10 @@
       "message": "You are about to start the quiz. Click the button below whenever you are ready.",
       "exit": "Exit",
       "enter": "Enter"
+    },
+    "question": {
+      "back": "Back",
+      "next": "Next"
     }
   }
 }

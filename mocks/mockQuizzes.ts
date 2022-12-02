@@ -3,7 +3,7 @@ import { IQuiz } from "../interfaces";
 export const mockQuizzes: IQuiz[] = [
   {
     question: {
-      id: 1,
+      id: 0,
       title: "The largest ocean in the world is",
     },
     answers: [
@@ -28,7 +28,7 @@ export const mockQuizzes: IQuiz[] = [
   },
   {
     question: {
-      id: 2,
+      id: 1,
       title: "The smallest country in the world is",
     },
     answers: [
@@ -53,7 +53,7 @@ export const mockQuizzes: IQuiz[] = [
   },
   {
     question: {
-      id: 3,
+      id: 2,
       title: "The largest continent in the world is",
     },
     answers: [
@@ -78,7 +78,7 @@ export const mockQuizzes: IQuiz[] = [
   },
   {
     question: {
-      id: 4,
+      id: 3,
       title: "The country with the largest population is",
     },
     answers: [
@@ -103,7 +103,7 @@ export const mockQuizzes: IQuiz[] = [
   },
   {
     question: {
-      id: 5,
+      id: 4,
       title: "The river that is not crossed by any bridge is",
     },
     answers: [

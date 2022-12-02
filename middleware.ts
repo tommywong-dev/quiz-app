@@ -5,7 +5,8 @@ import { IUser } from "./interfaces";
 
 export function middleware(request: NextRequest) {
   const cookieUser = request.cookies.get(COOKIE_KEY.USER)?.value;
-  if (!request.cookies.has(COOKIE_KEY.USER) || !cookieUser) {
+
+  if (!cookieUser) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -14,8 +15,6 @@ export function middleware(request: NextRequest) {
   if (!user.name || !user.email) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-
-  return NextResponse.redirect(new URL("/", request.url));
 }
 
 export const config = {
