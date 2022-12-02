@@ -19,17 +19,24 @@ const Question: NextPage<Props> = (props: Props) => {
   const { quizData } = props;
   const { quiz, totalQuiz } = quizData;
   const router = useRouter();
-  const { selectedAnswer, handleChangeAnswer } = useAnswer(quiz.question.id);
+  const { selectedAnswer, handleClearAnswer, handleChangeAnswer } = useAnswer(
+    quiz.question.id
+  );
 
   const handleBack = () => {
     if (quiz.question.id === 0) return;
     router.push(`/quiz/${quiz.question.id - 1}`);
+    handleClearAnswer();
   };
 
   const handleNext = () => {
-    if (quiz.question.id >= totalQuiz - 1) return;
-    router.push(`/quiz/${quiz.question.id + 1}`);
     setCookie(`Q${quiz.question.id}`, selectedAnswer);
+    handleClearAnswer();
+
+    if (quiz.question.id >= totalQuiz - 1) {
+      return router.push("/quiz/result");
+    }
+    router.push(`/quiz/${quiz.question.id + 1}`);
   };
 
   const calculateProgress = useMemo(

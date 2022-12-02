@@ -18,5 +18,7 @@ export const useAnswer = (questionId: number) => {
     setSelectedAnswer(e.target.value);
   };
 
-  return { selectedAnswer, setSelectedAnswer, handleChangeAnswer };
+  const handleClearAnswer = () => setSelectedAnswer("");
+
+  return { selectedAnswer, handleClearAnswer, handleChangeAnswer };
 };
