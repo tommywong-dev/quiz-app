@@ -1,42 +1,35 @@
-import {
-  Box,
-  Divider,
-  HStack,
-  Progress,
-  Radio,
-  RadioGroup,
-  Stack,
-} from "@chakra-ui/react";
+import { Divider, Progress, Stack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
-import React, {
-  ChangeEvent,
-  ReactElement,
-  ReactEventHandler,
-  useMemo,
-  useState,
-} from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import AppContainer from "../../components/common/AppContainer";
-import AppText from "../../components/common/AppText";
-import QuizButton from "../../components/common/QuizButton";
 import QuizBox from "../../components/pages/quiz/QuizBox";
-import { useTranslations } from "../../hooks";
-import { IClientQuiz, IResponse, IUser } from "../../interfaces";
-import { getUserFromCookie } from "../../utils";
+import { IClientQuiz, IResponse } from "../../interfaces";
+import QuizQuestion from "../../components/pages/quiz/QuizQuestion";
+import QuizAnswers from "../../components/pages/quiz/QuizAnswers";
+import QuizActionButtons from "../../components/pages/quiz/QuizActionButtons";
+import { getCookie, setCookie } from "cookies-next";
 
 interface Props {
-  user: IUser;
   quizData: IClientQuiz;
 }
 
 const Question: NextPage<Props> = (props: Props) => {
-  const { user, quizData } = props;
+  const { quizData } = props;
   const { quiz, totalQuiz } = quizData;
-  const t = useTranslations();
   const router = useRouter();
 
+  // answer handlers
   const [selected, setSelected] = useState("");
-  const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
+
+  useEffect(() => {
+    const cookie = getCookie(`Q${quiz.question.id}`);
+    if (!cookie) return;
+    setSelected(cookie.toString());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSelected((selected) =>
       selected === e.target.value ? "" : e.target.value
@@ -46,13 +39,12 @@ const Question: NextPage<Props> = (props: Props) => {
   const handleBack = () => {
     if (quiz.question.id === 0) return;
     router.push(`/quiz/${quiz.question.id - 1}`);
-    setSelected("");
   };
 
   const handleNext = () => {
     if (quiz.question.id >= totalQuiz - 1) return;
     router.push(`/quiz/${quiz.question.id + 1}`);
-    setSelected("");
+    setCookie(`Q${quiz.question.id}`, selected);
   };
 
   const calculateProgress = useMemo(
@@ -66,39 +58,20 @@ const Question: NextPage<Props> = (props: Props) => {
       <Stack width="full">
         <Progress value={calculateProgress} colorScheme="brand" />
         <QuizBox spacing="4">
-          <AppText as="div" fontSize="sm">
-            <Box as="span" fontWeight="bold">
-              {`Q${quiz.question.id + 1}: `}
-            </Box>
-            {quiz.question.title}
-          </AppText>
+          <QuizQuestion question={quiz.question} />
           <Divider />
-          <RadioGroup>
-            <Stack>
-              {quiz.answers.map((answer) => (
-                <Radio
-                  value={answer.value}
-                  key={answer.value}
-                  onChange={handleSelect}
-                  checked={selected === answer.value}
-                >
-                  {answer.label}
-                </Radio>
-              ))}
-            </Stack>
-          </RadioGroup>
+          <QuizAnswers
+            quiz={quiz}
+            handleChange={handleChange}
+            selected={selected}
+          />
           <Divider />
-          <HStack justifyContent="flex-end">
-            {quiz.question.id !== 0 ? (
-              <QuizButton variant="outline" onClick={handleBack}>
-                {t.quiz.question.back}
-              </QuizButton>
-            ) : null}
-
-            <QuizButton onClick={handleNext} disabled={!selected}>
-              {t.quiz.question.next}
-            </QuizButton>
-          </HStack>
+          <QuizActionButtons
+            isNotFirst={quiz.question.id !== 0}
+            handleBack={handleBack}
+            handleNext={handleNext}
+            disabled={!Boolean(selected)}
+          />
         </QuizBox>
       </Stack>
     </AppContainer>
@@ -106,15 +79,12 @@ const Question: NextPage<Props> = (props: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const user = getUserFromCookie(ctx);
-
   const { id } = ctx.query;
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/quiz/${id}`);
   const quiz: IResponse<IClientQuiz> = await res.json();
 
   return {
     props: {
-      user,
       quizData: quiz.data,
     },
   };
