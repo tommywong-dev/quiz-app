@@ -1,4 +1,10 @@
-import { Box, BoxProps, Stack, StackProps } from "@chakra-ui/react";
+import {
+  Box,
+  BoxProps,
+  Stack,
+  StackProps,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 
 interface Props extends BoxProps {
@@ -6,12 +12,14 @@ interface Props extends BoxProps {
 }
 const QuizBox = (props: Props) => {
   const { children, spacing } = props;
+  const borderColor = useColorModeValue("gray.300", "gray.700");
+
   return (
     <Box
       sx={{
         border: "1px solid",
-        borderColor: "blackAlpha.300",
         padding: "1rem",
+        borderColor,
       }}
       {...props}
     >

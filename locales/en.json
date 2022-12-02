@@ -1,5 +1,17 @@
 {
   "appTitle": "Geography Quiz",
+  "header": {
+    "exit": {
+      "label": "Exit Quiz",
+      "message": "Are you sure you want to exit the quiz? All the data stored will be lost after exiting.",
+      "no": "no",
+      "yes": "yes"
+    },
+    "mode": {
+      "dark": "Dark Mode",
+      "ligh": "Light Mode"
+    }
+  },
   "form": {
     "name": {
       "title": "Name",

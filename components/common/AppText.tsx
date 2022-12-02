@@ -1,8 +1,9 @@
-import { Text, TextProps } from "@chakra-ui/react";
+import { Text, TextProps, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 
 const AppText = (props: TextProps) => {
-  return <Text letterSpacing="wide" {...props} />;
+  const color = useColorModeValue("gray.700", "gray.200");
+  return <Text letterSpacing="wide" color={color} {...props} />;
 };
 
 export default AppText;
