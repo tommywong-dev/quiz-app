@@ -9,13 +9,16 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import Confetti from "react-confetti";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/router";
+import { IResponse, IResult } from "../../interfaces";
+import { COOKIE_KEY } from "../../constants";
+import { getAnswersFromCookies } from "../../utils";
 
 interface Props {
-  passed: boolean;
-  totalQuiz: number;
+  resultData: IResult;
 }
 const QuizResult = (props: Props) => {
-  const { passed, totalQuiz } = props;
+  const { resultData } = props;
+  const { passed } = resultData;
   const t = useTranslations();
   const { width, height } = useWindowSize();
   const router = useRouter();
@@ -23,9 +26,7 @@ const QuizResult = (props: Props) => {
   const status = passed ? "passed" : "failed";
 
   const handleRestart = () => {
-    [...Array(totalQuiz)].map((_, index) => {
-      deleteCookie(`Q${index}`);
-    });
+    deleteCookie(COOKIE_KEY.ANSWERS);
     router.push("/quiz");
   };
 
@@ -59,12 +60,38 @@ const QuizResult = (props: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  return {
-    props: {
-      passed: true,
-      totalQuiz: 5,
-    },
-  };
+  const answers = getAnswersFromCookies(ctx);
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quiz/result`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ answers }),
+      }
+    );
+
+    const result: IResponse<IResult> = await res.json();
+    const resultData = result.data;
+
+    return {
+      props: {
+        resultData,
+      },
+    };
+  } catch (e) {
+    return {
+      redirect: {
+        destination: "/quiz",
+        permanent: false,
+      },
+      props: {},
+    };
+  }
 };
 
 export default QuizResult;
