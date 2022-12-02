@@ -20,9 +20,9 @@
   "quiz": {
     "welcome": {
       "title": "Welcome,",
-      "message": "You are about to start the quiz. Click the button below whenever you are ready.",
+      "message": "You are about to start the quiz. Click the start button below whenever you are ready.",
       "exit": "Exit",
-      "enter": "Enter"
+      "enter": "start"
     },
     "question": {
       "back": "Back",
