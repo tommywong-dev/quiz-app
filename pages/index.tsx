@@ -10,6 +10,7 @@ import AppTitle from "../components/common/AppTitle";
 import AppText from "../components/common/AppText";
 import { useRouter } from "next/router";
 import AppContainer from "../components/common/AppContainer";
+import CookieText from "../components/pages/home/CookieText";
 
 export default function Home() {
   const t = useTranslations();
@@ -26,7 +27,7 @@ export default function Home() {
       <Stack spacing="8">
         <AppTitle />
         <UserForm onSubmit={onSubmit} />
-        <AppText fontSize="xs">{t.form.cookieText}</AppText>
+        <CookieText />
       </Stack>
     </AppContainer>
   );
