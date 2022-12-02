@@ -27,6 +27,17 @@
     "question": {
       "back": "Back",
       "next": "Next"
+    },
+    "result": {
+      "passed": {
+        "title": "You are a geography expert!!!",
+        "message": "You have got the best answers! Based on your answers, our system detected that you are a geography expert!"
+      },
+      "failed": {
+        "title": "There's still long way to go",
+        "message": "You still need much more work to do! Based on your answers, our system detected that you are not a geography expert just yet!"
+      },
+      "restart": "restart"
     }
   }
 }
