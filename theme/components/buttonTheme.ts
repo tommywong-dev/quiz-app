@@ -1,13 +1,21 @@
 import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 
-const solid = defineStyle({
+const baseStyle = defineStyle({
   borderRadius: 0,
   textTransform: "uppercase",
   letterSpacing: "widest",
+  fontFamily: "Gotham-Bold",
+});
+
+const outline = defineStyle({
   fontSize: "xs",
-  fontWeight: 900,
+});
+
+const solid = defineStyle({
+  fontSize: "xs",
 });
 
 export const buttonTheme = defineStyleConfig({
-  variants: { solid },
+  baseStyle,
+  variants: { outline, solid },
 });

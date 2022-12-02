@@ -16,5 +16,13 @@
     },
     "enter": "Enter",
     "cookieText": "This website uses cookies, which is necessary for its functioning and required to achieve the purposes illustrated in the cookies policy. Upon entering the quiz you agree to accept the use of cookies."
+  },
+  "quiz": {
+    "welcome": {
+      "title": "Welcome",
+      "message": "You are about to start the quiz. Click the button below whenever you are ready.",
+      "exit": "Exit",
+      "enter": "Enter"
+    }
   }
 }
