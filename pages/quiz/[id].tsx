@@ -1,14 +1,14 @@
 import { Divider, Progress, Stack } from "@chakra-ui/react";
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import AppContainer from "../../components/common/AppContainer";
 import QuizBox from "../../components/pages/quiz/QuizBox";
 import { IClientQuiz, IResponse } from "../../interfaces";
 import QuizQuestion from "../../components/pages/quiz/QuizQuestion";
 import QuizAnswers from "../../components/pages/quiz/QuizAnswers";
 import QuizActionButtons from "../../components/pages/quiz/QuizActionButtons";
-import { getCookie, setCookie } from "cookies-next";
+import { setCookie } from "cookies-next";
 import { useAnswer } from "../../hooks";
 
 interface Props {

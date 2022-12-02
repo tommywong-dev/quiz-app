@@ -12,9 +12,10 @@ import { useRouter } from "next/router";
 
 interface Props {
   passed: boolean;
+  totalQuiz: number;
 }
 const QuizResult = (props: Props) => {
-  const { passed } = props;
+  const { passed, totalQuiz } = props;
   const t = useTranslations();
   const { width, height } = useWindowSize();
   const router = useRouter();
@@ -22,7 +23,7 @@ const QuizResult = (props: Props) => {
   const status = passed ? "passed" : "failed";
 
   const handleRestart = () => {
-    [...Array(5)].map((_, index) => {
+    [...Array(totalQuiz)].map((_, index) => {
       deleteCookie(`Q${index}`);
     });
     router.push("/quiz");
@@ -61,6 +62,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       passed: true,
+      totalQuiz: 5,
     },
   };
 };
