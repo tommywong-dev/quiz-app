@@ -6,5 +6,5 @@ export const throwBadRequest = (res: NextApiResponse) => {
 };
 
 export const throwInvalidMethod = (res: NextApiResponse) => {
-  res.status(403).json(makeResponse(403, "invalid request method"));
+  res.status(405).json(makeResponse(405, "invalid request method"));
 };
