@@ -25,7 +25,7 @@ describe("Test entering quiz without authentication", () => {
 
 describe("Test after entering quiz", () => {
   before(() => {
-    cy.login();
+    cy.enterQuiz();
   });
 
   it("should close alert when clicked 'no'", () => {

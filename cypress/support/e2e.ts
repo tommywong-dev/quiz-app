@@ -21,12 +21,14 @@ import "./commands";
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-Cypress.Commands.add("login", () => {
+Cypress.Commands.add("enterQuiz", () => {
   cy.clearCookie(COOKIE_KEY.USER);
   cy.visit(URL.BASE);
   cy.visit(URL.BASE);
   cy.get(INPUT.NAME).type(MOCK_USER.name);
   cy.get(INPUT.EMAIL).type(MOCK_USER.email);
   cy.get(INPUT.SUBMIT_BUTTON).click();
-  Cypress.Cookies.defaults({ preserve: COOKIE_KEY.USER });
+  Cypress.Cookies.defaults({
+    preserve: [COOKIE_KEY.USER, COOKIE_KEY.ANSWERS, COOKIE_KEY.ERROR],
+  });
 });

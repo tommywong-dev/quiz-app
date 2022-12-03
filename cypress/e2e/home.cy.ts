@@ -59,7 +59,7 @@ describe("Test Home Form", () => {
 
   describe("Test entering quiz", () => {
     it("should enter when input valid data", () => {
-      cy.login();
+      cy.enterQuiz();
     });
 
     it("should have correct user coookie stored when enter quiz page", () => {
