@@ -9,9 +9,9 @@ import QuizQuestion from "../../components/pages/quiz/QuizQuestion";
 import QuizAnswers from "../../components/pages/quiz/QuizAnswers";
 import QuizActionButtons from "../../components/pages/quiz/QuizActionButtons";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
-import { useAnswer, useTranslations } from "../../hooks";
-import { COOKIE_KEY } from "../../constants";
-import { getAnswersFromCookies } from "../../utils";
+import { useAnswer, useError, useTranslations } from "../../hooks";
+import { COOKIE_KEY, TROLL_MESSAGE } from "../../constants";
+import { getAnswersFromCookies, redirectQuiz } from "../../utils";
 
 interface Props {
   quizData: IClientQuiz;
@@ -26,21 +26,10 @@ const Question: NextPage<Props> = (props: Props) => {
   const { selectedAnswer, handleClearAnswer, handleChangeAnswer } = useAnswer(
     quiz.question.id
   );
+  const checkError = useError();
 
   useEffect(() => {
-    const error = getCookie(COOKIE_KEY.ERROR)?.toString();
-    if (error) {
-      toast({
-        title: t.error.forbidden,
-        description: error,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        onCloseComplete: () => {
-          deleteCookie(COOKIE_KEY.ERROR);
-        },
-      });
-    }
+    checkError();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -108,25 +97,30 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   //! guard invalid id requests
   const answers = getAnswersFromCookies(ctx);
   const id = parseInt(reqId, 10);
-  if (isNaN(id) || id > answers.length) {
-    setCookie(COOKIE_KEY.ERROR, "Don't try to cheat ya 😉", ctx);
-    return {
-      redirect: {
-        destination: `/quiz/${answers.length}`,
-        permanent: false,
-        message: "",
-      },
-    };
+  if (isNaN(id)) {
+    setCookie(COOKIE_KEY.ERROR, TROLL_MESSAGE.BRUH, ctx);
+    return redirectQuiz(answers.length);
+  }
+  if (id > answers.length) {
+    setCookie(COOKIE_KEY.ERROR, TROLL_MESSAGE.CHEAT, ctx);
+    return redirectQuiz(answers.length);
   }
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/quiz/${id}`);
-  const quiz: IResponse<IClientQuiz> = await res.json();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/quiz/${id}`
+    );
+    const quiz: IResponse<IClientQuiz> = await res.json();
 
-  return {
-    props: {
-      quizData: quiz.data,
-    },
-  };
+    return {
+      props: {
+        quizData: quiz.data,
+      },
+    };
+  } catch (e) {
+    setCookie(COOKIE_KEY.ERROR, TROLL_MESSAGE.BRUH, ctx);
+    return redirectQuiz(answers.length);
+  }
 };
 
 export default Question;

@@ -52,7 +52,5 @@
       "restart": "restart"
     }
   },
-  "error": {
-    "forbidden": "Request Forbidden"
-  }
+  "error": "Error"
 }

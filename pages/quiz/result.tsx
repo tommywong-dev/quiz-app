@@ -1,17 +1,17 @@
 import { Divider, HStack, Progress, Stack, Text } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
-import React from "react";
+import React, { useEffect } from "react";
 import AppContainer from "../../components/common/AppContainer";
 import QuizBox from "../../components/pages/quiz/QuizBox";
 import QuizButton from "../../components/pages/quiz/QuizButton";
-import { useTranslations } from "../../hooks";
+import { useError, useTranslations } from "../../hooks";
 import { useWindowSize } from "../../hooks";
 import Confetti from "react-confetti";
-import { deleteCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { IResponse, IResult } from "../../interfaces";
-import { COOKIE_KEY } from "../../constants";
-import { getAnswersFromCookies } from "../../utils";
+import { COOKIE_KEY, TROLL_MESSAGE } from "../../constants";
+import { getAnswersFromCookies, redirectQuiz } from "../../utils";
 
 interface Props {
   resultData: IResult;
@@ -22,13 +22,19 @@ const QuizResult = (props: Props) => {
   const t = useTranslations();
   const { width, height } = useWindowSize();
   const router = useRouter();
+  const checkError = useError();
 
-  const status = passed ? "passed" : "failed";
+  useEffect(() => {
+    checkError();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleRestart = () => {
     deleteCookie(COOKIE_KEY.ANSWERS);
     router.push("/quiz");
   };
+
+  const status = passed ? "passed" : "failed";
 
   return (
     <AppContainer isQuizPage>
@@ -75,6 +81,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     );
 
+    if (res.status !== 201) {
+      setCookie(COOKIE_KEY.ERROR, TROLL_MESSAGE.NOT_FINISH, ctx);
+      return redirectQuiz(answers.length);
+    }
     const result: IResponse<IResult> = await res.json();
     const resultData = result.data;
 
@@ -84,13 +94,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     };
   } catch (e) {
-    return {
-      redirect: {
-        destination: "/quiz",
-        permanent: false,
-      },
-      props: {},
-    };
+    setCookie(COOKIE_KEY.ERROR, TROLL_MESSAGE.BRUH, ctx);
+    return redirectQuiz(answers.length);
   }
 };
 
