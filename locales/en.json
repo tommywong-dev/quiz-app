@@ -51,5 +51,8 @@
       },
       "restart": "restart"
     }
+  },
+  "error": {
+    "forbidden": "Request Forbidden"
   }
 }
