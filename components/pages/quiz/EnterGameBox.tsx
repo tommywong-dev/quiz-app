@@ -17,10 +17,12 @@ const EnterGameBox = (props: Props) => {
     <QuizBox spacing="4">
       <AppText>{t.quiz.welcome.message}</AppText>
       <SimpleGrid columns={2} spacing="4">
-        <QuizButton variant="outline" onClick={handleExit}>
+        <QuizButton id="exit-btn" variant="outline" onClick={handleExit}>
           {t.quiz.welcome.exit}
         </QuizButton>
-        <QuizButton onClick={handleStart}>{t.quiz.welcome.enter}</QuizButton>
+        <QuizButton id="enter-btn" onClick={handleStart}>
+          {t.quiz.welcome.enter}
+        </QuizButton>
       </SimpleGrid>
     </QuizBox>
   );

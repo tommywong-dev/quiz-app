@@ -77,10 +77,19 @@ export const AlertProvider = (props: Props) => {
             </AlertDialogHeader>
             <AlertDialogBody>{data.body}</AlertDialogBody>
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleClose}>
+              <Button
+                id="alert-cancel-btn"
+                ref={cancelRef}
+                onClick={handleClose}
+              >
                 {data.onCloseLabel || t.common.no}
               </Button>
-              <Button colorScheme="red" onClick={handleConfirm} ml={3}>
+              <Button
+                id="alert-confirm-btn"
+                colorScheme="red"
+                onClick={handleConfirm}
+                ml={3}
+              >
                 {data.onConfirmLabel || t.common.yes}
               </Button>
             </AlertDialogFooter>

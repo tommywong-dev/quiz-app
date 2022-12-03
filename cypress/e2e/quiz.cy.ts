@@ -1,50 +1,49 @@
 import { COOKIE_KEY } from "../../constants";
 import { INPUT, MOCK_USER, URL } from "../test-constants";
+import t from "../../locales/en.json";
 
-describe("Test Entering Quiz without authentication", () => {
-  const WAIT_TIME = 1000;
+describe("Test entering quiz without authentication", () => {
+  before(() => {
+    cy.clearCookie(COOKIE_KEY.USER);
+    cy.visit(URL.BASE);
+  });
 
   it("should redirect to '/' when navigate '/quiz' without authentication", () => {
     cy.visit(URL.QUIZ);
-    cy.wait(WAIT_TIME).url().should("equal", URL.BASE);
+    cy.url().should("equal", URL.BASE);
   });
 
   it("should redirect to '/' when navigate '/quiz/[id]' without authentication", () => {
     cy.visit(URL.QUIZ + "/1");
-    cy.wait(WAIT_TIME).url().should("equal", URL.BASE);
+    cy.url().should("equal", URL.BASE);
   });
 
   it("should redirect to '/' when navigate '/quiz/result' without authentication", () => {
     cy.visit(URL.QUIZ + "/result");
-    cy.wait(WAIT_TIME).url().should("equal", URL.BASE);
+    cy.url().should("equal", URL.BASE);
   });
 });
 
-describe.only("Test entering quiz", () => {
+describe("Test after entering quiz", () => {
   before(() => {
+    cy.clearCookie(COOKIE_KEY.USER);
+    cy.visit(URL.BASE);
     cy.visit(URL.BASE);
     cy.get(INPUT.NAME).type(MOCK_USER.name);
     cy.get(INPUT.EMAIL).type(MOCK_USER.email);
     cy.get(INPUT.BUTTON).click();
-    Cypress.Cookies.defaults({
-      preserve: COOKIE_KEY.USER,
-    });
+    Cypress.Cookies.preserveOnce(COOKIE_KEY.USER);
   });
 
-  it("should enter quiz page when enter valid name and email", () => {
+  it("should close alert when clicked 'no'", () => {
+    cy.get("#exit-btn").click();
+    cy.get("#alert-cancel-btn").click();
     cy.url().should("equal", URL.QUIZ);
   });
 
-  it("should have correct user coookie stored when enter quiz page", () => {
-    cy.getCookie(COOKIE_KEY.USER).should(
-      "have.a.property",
-      "name",
-      COOKIE_KEY.USER
-    );
-    cy.getCookie(COOKIE_KEY.USER).should(
-      "have.a.property",
-      "value",
-      encodeURIComponent(JSON.stringify(MOCK_USER))
-    );
+  it("should exit quiz when clicked 'yes'", () => {
+    cy.get("#exit-btn").click();
+    cy.get("#alert-confirm-btn").click();
+    cy.url().should("equal", URL.BASE);
   });
 });
