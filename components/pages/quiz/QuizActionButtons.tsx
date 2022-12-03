@@ -17,12 +17,21 @@ const QuizActionButtons = (props: Props) => {
   return (
     <HStack justifyContent="flex-end">
       {isNotFirst ? (
-        <QuizButton variant="outline" disabled={loading} onClick={handleBack}>
+        <QuizButton
+          id="back-btn"
+          variant="outline"
+          disabled={loading}
+          onClick={handleBack}
+        >
           {t.quiz.question.back}
         </QuizButton>
       ) : null}
 
-      <QuizButton onClick={handleNext} disabled={disabled || loading}>
+      <QuizButton
+        id="next-btn"
+        onClick={handleNext}
+        disabled={disabled || loading}
+      >
         {loading ? (
           <CircularProgress isIndeterminate size="16px" color="white" mr="4" />
         ) : null}

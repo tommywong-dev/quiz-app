@@ -1,6 +1,5 @@
 import { COOKIE_KEY } from "../../constants";
-import { INPUT, MOCK_USER, URL } from "../test-constants";
-import t from "../../locales/en.json";
+import { BUTTON, URL } from "../test-constants";
 
 describe("Test entering quiz without authentication", () => {
   before(() => {
@@ -26,24 +25,18 @@ describe("Test entering quiz without authentication", () => {
 
 describe("Test after entering quiz", () => {
   before(() => {
-    cy.clearCookie(COOKIE_KEY.USER);
-    cy.visit(URL.BASE);
-    cy.visit(URL.BASE);
-    cy.get(INPUT.NAME).type(MOCK_USER.name);
-    cy.get(INPUT.EMAIL).type(MOCK_USER.email);
-    cy.get(INPUT.BUTTON).click();
-    Cypress.Cookies.preserveOnce(COOKIE_KEY.USER);
+    cy.login();
   });
 
   it("should close alert when clicked 'no'", () => {
-    cy.get("#exit-btn").click();
-    cy.get("#alert-cancel-btn").click();
+    cy.get(BUTTON.EXIT_BTN).click();
+    cy.get(BUTTON.ALERT_CANCEL_BTN).click();
     cy.url().should("equal", URL.QUIZ);
   });
 
   it("should exit quiz when clicked 'yes'", () => {
-    cy.get("#exit-btn").click();
-    cy.get("#alert-confirm-btn").click();
+    cy.get(BUTTON.EXIT_BTN).click();
+    cy.get(BUTTON.ALERT_CONFIRM_BTN).click();
     cy.url().should("equal", URL.BASE);
   });
 });

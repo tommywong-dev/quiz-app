@@ -59,11 +59,7 @@ describe("Test Home Form", () => {
 
   describe("Test entering quiz", () => {
     it("should enter when input valid data", () => {
-      cy.get(INPUT.NAME).type(MOCK_USER.name);
-      cy.get(INPUT.EMAIL).type(MOCK_USER.email);
-      cy.get(INPUT.BUTTON).click();
-      cy.url().should("contain", URL.QUIZ);
-      Cypress.Cookies.preserveOnce(COOKIE_KEY.USER);
+      cy.login();
     });
 
     it("should have correct user coookie stored when enter quiz page", () => {

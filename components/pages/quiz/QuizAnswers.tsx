@@ -21,6 +21,7 @@ const QuizAnswers = (props: Props) => {
       <Stack>
         {quiz.answers.map((answer) => (
           <Radio
+            aria-label={`answer-${answer.value}`}
             value={answer.value}
             key={answer.value}
             onChange={handleChange}
