@@ -11,7 +11,7 @@ export const useError = () => {
   const checkErrorAndToast = () => {
     if (error) {
       toast({
-        title: t.error,
+        title: t.common.error,
         description: error,
         status: "error",
         duration: 5000,

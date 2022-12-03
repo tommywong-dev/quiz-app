@@ -1,19 +1,16 @@
-import { Center, Container, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import React from "react";
 import UserForm from "../components/pages/home/UserForm";
-import { useTranslations } from "../hooks";
 import { IUser } from "../interfaces";
 import { setCookie } from "cookies-next";
 import { trimObjStrings } from "../utils";
 import { COOKIE_KEY } from "../constants";
 import AppTitle from "../components/common/AppTitle";
-import AppText from "../components/common/AppText";
 import { useRouter } from "next/router";
 import AppContainer from "../components/common/AppContainer";
 import CookieText from "../components/pages/home/CookieText";
 
 export default function Home() {
-  const t = useTranslations();
   const router = useRouter();
 
   const onSubmit = (values: IUser) => {

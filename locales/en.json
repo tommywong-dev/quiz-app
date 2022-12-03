@@ -52,5 +52,9 @@
       "restart": "restart"
     }
   },
-  "error": "Error"
+  "common": {
+    "error": "Error",
+    "no": "No",
+    "yes": "Yes"
+  }
 }
