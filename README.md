@@ -1,7 +1,9 @@
 # Geography Quiz App
-Built to demonstrate my Next.js, TypeScript, ChakraUI, and Cypress skills. Together with code splitting, React best practices, e2e testing, concise types and many more.
+
+Built to demonstrate my Next.js, TypeScript, ChakraUI, and Cypress skills. Together with code splitting, React best practices, e2e testing, concise type system, localization, dark mode, basic authentication and many more.
 
 ## Demo
+
 [Link](https://quiz-app-gneng.vercel.app/)
 
 ## Getting Started
