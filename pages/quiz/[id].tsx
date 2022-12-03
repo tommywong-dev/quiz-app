@@ -8,7 +8,7 @@ import { IClientQuiz, IResponse } from "../../interfaces";
 import QuizQuestion from "../../components/pages/quiz/QuizQuestion";
 import QuizAnswers from "../../components/pages/quiz/QuizAnswers";
 import QuizActionButtons from "../../components/pages/quiz/QuizActionButtons";
-import { getCookie, setCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { useAnswer, useTranslations } from "../../hooks";
 import { COOKIE_KEY } from "../../constants";
 import { getAnswersFromCookies } from "../../utils";
@@ -36,6 +36,9 @@ const Question: NextPage<Props> = (props: Props) => {
         status: "error",
         duration: 5000,
         isClosable: true,
+        onCloseComplete: () => {
+          deleteCookie(COOKIE_KEY.ERROR);
+        },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
