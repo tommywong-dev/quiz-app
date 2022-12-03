@@ -69,9 +69,10 @@ export const AlertProvider = (props: Props) => {
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
         onClose={handleClose}
+        isCentered
       >
         <AlertDialogOverlay>
-          <AlertDialogContent>
+          <AlertDialogContent mx="8">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               {data.header}
             </AlertDialogHeader>
