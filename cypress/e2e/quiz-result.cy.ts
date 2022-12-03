@@ -16,6 +16,11 @@ describe("Test quiz result", () => {
     cy.get(".chakra-alert").should("exist");
   });
 
+  it("should dismiss error toast when clicked 'x'", () => {
+    cy.get(".chakra-alert > button").click();
+    cy.get(".chakra-alert").should("not.exist");
+  });
+
   it("should show passed when finished with correct answers", () => {
     cy.clearCookie(COOKIE_KEY.ANSWERS);
     const correctAnswers: string[] = mockQuizzes.reduce((prev, curr) => {
