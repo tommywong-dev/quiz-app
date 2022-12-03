@@ -1,22 +1,11 @@
-import { CloseIcon, MoonIcon, SmallCloseIcon, SunIcon } from "@chakra-ui/icons";
-import {
-  Alert,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Button,
-  HStack,
-  IconButton,
-  Tooltip,
-  useColorMode,
-} from "@chakra-ui/react";
+import { MoonIcon, SmallCloseIcon, SunIcon } from "@chakra-ui/icons";
+import { HStack, IconButton, Tooltip, useColorMode } from "@chakra-ui/react";
 import { deleteCookie } from "cookies-next";
-import React, { useRef, useState } from "react";
+import { useRouter } from "next/router";
+import React from "react";
 import { COOKIE_KEY } from "../../constants";
-import { useAlertExit, useTranslations } from "../../hooks";
+import { useTranslations } from "../../hooks";
+import { useAlert } from "../../providers";
 
 interface Props {
   isQuizPage: boolean;
@@ -25,9 +14,20 @@ const AppHeader = (props: Props) => {
   const { isQuizPage } = props;
   const t = useTranslations();
   const { colorMode, toggleColorMode } = useColorMode();
+  const router = useRouter();
+  const { alert } = useAlert();
 
-  const { cancelRef, alertExit, handleAlert, handleClose, handleExit } =
-    useAlertExit();
+  const handleAlertExit = () => {
+    alert({
+      header: t.header.exit.label,
+      body: t.header.exit.message,
+      onConfirm: () => {
+        deleteCookie(COOKIE_KEY.ANSWERS);
+        deleteCookie(COOKIE_KEY.USER);
+        router.push("/");
+      },
+    });
+  };
 
   return (
     <HStack
@@ -46,31 +46,9 @@ const AppHeader = (props: Props) => {
           variant="ghost"
           visibility={isQuizPage ? "visible" : "hidden"}
           icon={<SmallCloseIcon />}
-          onClick={handleAlert}
+          onClick={handleAlertExit}
         />
       </Tooltip>
-      <AlertDialog
-        isOpen={alertExit}
-        leastDestructiveRef={cancelRef}
-        onClose={handleClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {t.header.exit.label}
-            </AlertDialogHeader>
-            <AlertDialogBody>{t.header.exit.message}</AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={handleClose}>
-                {t.header.exit.no}
-              </Button>
-              <Button colorScheme="red" onClick={handleExit} ml={3}>
-                {t.header.exit.yes}
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
 
       <Tooltip
         label={colorMode === "light" ? t.header.mode.dark : t.header.mode.light}

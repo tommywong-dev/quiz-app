@@ -4,6 +4,10 @@ import { useTranslations } from "../../../hooks";
 import AppText from "../../common/AppText";
 import QuizButton from "./QuizButton";
 import QuizBox from "./QuizBox";
+import { useAlert } from "../../../providers";
+import { deleteCookie } from "cookies-next";
+import { COOKIE_KEY } from "../../../constants";
+import { useRouter } from "next/router";
 
 interface Props {
   handleExit: () => void;
