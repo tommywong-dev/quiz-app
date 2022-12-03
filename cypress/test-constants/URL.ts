@@ -1,4 +1,7 @@
+const BASE = process.env.NEXT_PUBLIC_URL || "http://localhost:3000/";
+
 export const URL = {
-  BASE: "http://localhost:3000/",
-  QUIZ: "http://localhost:3000/quiz",
+  BASE,
+  QUIZ: BASE + "quiz",
+  QUIZ_RESULT: BASE + "quiz/result",
 };

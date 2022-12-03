@@ -1,17 +1,16 @@
-import { Divider, HStack, Progress, Stack, Text } from "@chakra-ui/react";
+import { Progress, Stack } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import React, { useEffect } from "react";
 import AppContainer from "../../components/common/AppContainer";
-import QuizBox from "../../components/pages/quiz/QuizBox";
-import QuizButton from "../../components/pages/quiz/QuizButton";
 import { useError, useTranslations } from "../../hooks";
 import { useWindowSize } from "../../hooks";
 import Confetti from "react-confetti";
-import { deleteCookie, getCookie, setCookie } from "cookies-next";
+import { deleteCookie, setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { IResponse, IResult } from "../../interfaces";
 import { COOKIE_KEY, TROLL_MESSAGE } from "../../constants";
 import { getAnswersFromCookies, redirectQuiz } from "../../utils";
+import ResultBox from "../../components/pages/quiz/ResultBox";
 
 interface Props {
   resultData: IResult;
@@ -48,18 +47,7 @@ const QuizResult = (props: Props) => {
       />
       <Stack width="full">
         <Progress value={100} colorScheme="brand" />
-        <QuizBox spacing="4">
-          <Text fontSize="xl" fontWeight="bold" fontFamily="Gotham-Bold">
-            {t.quiz.result[status].title}
-          </Text>
-          <Text fontSize="sm">{t.quiz.result[status].message}</Text>
-          <Divider />
-          <HStack justifyContent="flex-end">
-            <QuizButton onClick={handleRestart}>
-              {t.quiz.result.restart}
-            </QuizButton>
-          </HStack>
-        </QuizBox>
+        <ResultBox status={status} handleRestart={handleRestart} />
       </Stack>
     </AppContainer>
   );

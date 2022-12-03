@@ -12,4 +12,5 @@ export const BUTTON = {
   ALERT_CONFIRM_BTN: "#alert-confirm-btn",
   BACK_BTN: "#back-btn",
   NEXT_BTN: "#next-btn",
+  RESTART_BTN: "#restart-btn",
 };
