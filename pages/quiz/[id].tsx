@@ -107,9 +107,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/quiz/${id}`
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/quiz/${id}`);
     const quiz: IResponse<IClientQuiz> = await res.json();
 
     return {

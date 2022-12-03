@@ -69,17 +69,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const answers = getAnswersFromCookies(ctx);
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/quiz/result`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ answers }),
-      }
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/quiz/result`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ answers }),
+    });
 
     if (res.status !== 201) {
       setCookie(COOKIE_KEY.ERROR, TROLL_MESSAGE.NOT_FINISH, ctx);
