@@ -4,19 +4,28 @@ import { COOKIE_KEY } from "./constants";
 import { IUser } from "./interfaces";
 
 export function middleware(request: NextRequest) {
-  const cookieUser = request.cookies.get(COOKIE_KEY.USER)?.value;
-
-  if (!cookieUser) {
-    return NextResponse.redirect(new URL("/", request.url));
+  if (request.nextUrl.pathname === "/") {
+    const cookieUser = request.cookies.get(COOKIE_KEY.USER)?.value;
+    if (cookieUser) {
+      return NextResponse.redirect(new URL("/quiz", request.url));
+    }
   }
 
-  const user: IUser = JSON.parse(cookieUser.toString());
+  if (request.nextUrl.pathname.startsWith("/quiz")) {
+    const cookieUser = request.cookies.get(COOKIE_KEY.USER)?.value;
 
-  if (!user.name || !user.email) {
-    return NextResponse.redirect(new URL("/", request.url));
+    if (!cookieUser) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    const user: IUser = JSON.parse(cookieUser.toString());
+
+    if (!user.name || !user.email) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
   }
 }
 
 export const config = {
-  matcher: "/quiz/:id*",
+  matcher: ["/", "/quiz/:id*"],
 };
