@@ -4,13 +4,13 @@ import {
   FormErrorMessage,
   Input,
   Stack,
-  Text,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import React, { useMemo } from "react";
-import { useTranslations } from "../../../hooks";
+import { usePageLoading, useTranslations } from "../../../hooks";
 import { IUser } from "../../../interfaces";
 import * as yup from "yup";
+import AppLoading from "../../common/AppLoading";
 
 interface Props {
   onSubmit: (values: IUser) => void;
@@ -24,6 +24,7 @@ const initialValues: IUser = {
 const UserForm = (props: Props) => {
   const { onSubmit } = props;
   const t = useTranslations();
+  const loading = usePageLoading();
 
   const validationSchema = useMemo(
     () =>
@@ -58,7 +59,12 @@ const UserForm = (props: Props) => {
                   isRequired
                   isInvalid={Boolean(errors.name && touched.name)}
                 >
-                  <Input {...field} placeholder={t.form.name.title} required />
+                  <Input
+                    {...field}
+                    placeholder={t.form.name.title}
+                    required
+                    disabled={loading}
+                  />
                   <FormErrorMessage>{errors.name}</FormErrorMessage>
                 </FormControl>
               )}
@@ -69,12 +75,23 @@ const UserForm = (props: Props) => {
                   isRequired
                   isInvalid={Boolean(errors.email && touched.email)}
                 >
-                  <Input {...field} placeholder={t.form.email.title} required />
+                  <Input
+                    {...field}
+                    placeholder={t.form.email.title}
+                    required
+                    disabled={loading}
+                  />
                   <FormErrorMessage>{errors.email}</FormErrorMessage>
                 </FormControl>
               )}
             </Field>
-            <Button width="full" type="submit" colorScheme="brand">
+            <Button
+              width="full"
+              type="submit"
+              colorScheme="brand"
+              disabled={loading}
+            >
+              {loading ? <AppLoading /> : null}
               {t.form.enter}
             </Button>
           </Stack>

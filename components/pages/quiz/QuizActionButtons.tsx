@@ -1,6 +1,7 @@
 import { CircularProgress, HStack } from "@chakra-ui/react";
 import React from "react";
 import { usePageLoading, useTranslations } from "../../../hooks";
+import AppLoading from "../../common/AppLoading";
 import QuizButton from "./QuizButton";
 
 interface Props {
@@ -16,6 +17,8 @@ const QuizActionButtons = (props: Props) => {
 
   return (
     <HStack justifyContent="flex-end">
+      {loading ? <AppLoading /> : null}
+
       {isNotFirst ? (
         <QuizButton
           id="back-btn"
@@ -32,9 +35,6 @@ const QuizActionButtons = (props: Props) => {
         onClick={handleNext}
         disabled={disabled || loading}
       >
-        {loading ? (
-          <CircularProgress isIndeterminate size="16px" color="white" mr="4" />
-        ) : null}
         {t.quiz.question.next}
       </QuizButton>
     </HStack>
