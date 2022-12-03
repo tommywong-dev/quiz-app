@@ -13,7 +13,7 @@ const AppContainer = (props: Props) => {
   return (
     <Container centerContent>
       <AppHeader isQuizPage={isQuizPage} />
-      <Center minH="100vh" maxW="md" minW="sm">
+      <Center minH="100vh" maxW="md" minW="xs" p="4">
         {children}
       </Center>
     </Container>

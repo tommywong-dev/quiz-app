@@ -12,7 +12,8 @@ const WelcomeText = (props: Props) => {
 
   return (
     <Heading>
-      {t.quiz.welcome.title} {name}
+      {t.quiz.welcome.title}{" "}
+      {name.length > 20 ? name.substring(0, 20) + "..." : name}
     </Heading>
   );
 };
